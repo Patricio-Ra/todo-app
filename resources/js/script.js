@@ -4,7 +4,7 @@ const todos = document.querySelectorAll('p');
 
 const filterPs = function (ps, query) {
   ps.forEach(p => {
-    if (p.innerText.includes(query)) {
+    if (p.innerText.toLowerCase().includes(query)) {
       p.remove();
     };
   });
