@@ -1,32 +1,26 @@
 'use strict'
 
-const todos = [{
-  'text': 'Study JS',
-  'completed': true
-}, {
-  'text': 'Work in HTML/CSS practices',
-  'completed': true
-}, {
-  'text': 'Go fitness',
-  'completed': false
-}, {
-  'text': 'Feed and cure the dog',
-  'completed': true
-}, {
-  'text': 'Keep looking for some relax activity',
-  'completed': false
-}, {
-  'text': 'Practice guitar',
-  'completed': false
-}];
+// DATA //
 
+// Todos.
+let todos = [];
+
+// Filters.
 const filters = {
   'searchText': '',
   'hideCompleted': false
 };
 
 
-// Render Todos & Todos left.
+// Check and retrive existing saved DATA when APP starts//
+const todosJSON = localStorage.getItem('todos');
+
+if (todosJSON !== null) {
+  todos = JSON.parse(todosJSON);
+};
+
+
+// Render Todos & Todos left heading //
 const renderTodos = function (todos, filters) {
 
   // Todos list.
@@ -39,17 +33,17 @@ const renderTodos = function (todos, filters) {
   // Clean the container.
   document.querySelector('#todos').innerHTML = '';
 
-  // Todos left.
+  // Todos left heading calc.
   const incompletedTodos = filteredTodos.filter(todo => {
     return !todo.completed;
   });
 
-  // Render Todos left.
+  // Render todos left heading.
   const summary = document.createElement('h2');
   summary.textContent = `You have ${incompletedTodos.length} todos left.`;
   document.querySelector('#todos').appendChild(summary);
 
-  // Render Todos list.
+  // Render todos list.
   filteredTodos.forEach(todo => {
     let todoElement = document.createElement('p');
     todoElement.textContent = `${todo.text} -  ${todo.completed ? 'Completed' : 'TODO!'}`;
@@ -59,7 +53,7 @@ const renderTodos = function (todos, filters) {
 };
 
 
-// Filter Todos Inputs.
+// Filter todos inputs //
 document.querySelector('#filter-todos').addEventListener('input', e => {
   filters.searchText = e.target.value;
   renderTodos(todos, filters);
@@ -71,15 +65,20 @@ document.querySelector('#hide-completed').addEventListener('change', e => {
 });
 
 
-// New todo form.
+// New todo form //
 document.querySelector('#new-todo-form').addEventListener('submit', e => {
   e.preventDefault();
-  const newTodo = {
-    text: e.target.elements.newTodo.value,
-    completed: false
+  if (e.target.elements.newTodoInput.value.length > 0) {
+    const newTodo = {
+      text: e.target.elements.newTodoInput.value,
+      completed: false
+    };
+    todos.push(newTodo);
+    e.target.elements.newTodoInput.value = '';
+    localStorage.setItem('todos', JSON.stringify(todos));
+  } else {
+    return false;
   };
-  todos.push(newTodo);
-  e.target.elements.newTodo.value = '';
   renderTodos(todos, filters);
 });
 
