@@ -24,6 +24,7 @@ document.querySelector('#new-todo-form').addEventListener('submit', e => {
   e.preventDefault();
   if (e.target.elements.newTodoInput.value.length > 0) {
     const newTodo = {
+      id: uuidv4(),
       text: e.target.elements.newTodoInput.value,
       completed: false
     };

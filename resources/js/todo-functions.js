@@ -16,6 +16,17 @@ const saveTodos = function (todos) {
   localStorage.setItem('todos', JSON.stringify(todos));
 };
 
+// Remove todo
+const removeTodo = function (id) {
+  const todoIndex = todos.findIndex(todo => {
+    return todo.id === id;
+  });
+
+  if (todoIndex > -1) {
+    todos.splice(todoIndex, 1);
+  };
+};
+
 // Generate DOM elements for an individual note.
 const generateTodo = function (todo) {
   const todoElement = document.createElement('div');
@@ -36,6 +47,11 @@ const generateTodo = function (todo) {
   // Setup delete button.
   deleteBtn.textContent = 'x';
   todoElement.appendChild(deleteBtn);
+  deleteBtn.addEventListener('click', e => {
+    removeTodo(todo.id);
+    saveTodos(todos);
+    renderTodos(todos, filters);
+  });
 
   return todoElement;
 };
