@@ -43,7 +43,6 @@ const renderTodos = function (todos, filters) {
   const filteredTodos = todos.filter(todo => {
     const textFiltering = todo.text.toLowerCase().includes(filters.searchText.toLowerCase());
     const completedFiltering = !filters.hideCompleted || !todo.completed;
-
     return textFiltering && completedFiltering;
     });
 
