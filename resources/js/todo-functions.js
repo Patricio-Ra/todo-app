@@ -11,10 +11,12 @@ const getSavedTodos = function () {
   };
 };
 
+
 // Save data to localStorage
 const saveTodos = function (todos) {
   localStorage.setItem('todos', JSON.stringify(todos));
 };
+
 
 // Remove todo
 const removeTodo = function (id) {
@@ -27,6 +29,19 @@ const removeTodo = function (id) {
   };
 };
 
+
+// Toggle completed status with checkboxes.
+const setCompleted = function (id) {
+  const todo = todos.find(todo => {
+    return todo.id === id;
+  });
+
+  if (todo !== undefined) {
+    todo.completed = !todo.completed;
+  };
+};
+
+
 // Generate DOM elements for an individual note.
 const generateTodo = function (todo) {
   const todoElement = document.createElement('div');
@@ -38,7 +53,13 @@ const generateTodo = function (todo) {
 
   // Setup todo checkbox.
   todoCheck.setAttribute('type', 'checkbox');
+  todoCheck.checked = todo.completed;
   todoElement.appendChild(todoCheck);
+  todoCheck.addEventListener('change', e => {
+    setCompleted(todo.id);  // Instead it's better to todo.completed = e.target.checked;*
+    saveTodos(todos);
+    renderTodos(todos, filters);
+  });
 
   // Setup todo text.
   todoText.textContent = todo.text;
@@ -56,6 +77,7 @@ const generateTodo = function (todo) {
   return todoElement;
 };
 
+
 // Generate DOM elements for the summary.
 const generateSummary = function (incompletedTodos) {
 
@@ -64,6 +86,7 @@ const generateSummary = function (incompletedTodos) {
 
   return summary;
 };
+
 
 // Render app based on filters.
 const renderTodos = function (todos, filters) {
@@ -84,3 +107,17 @@ const renderTodos = function (todos, filters) {
     document.querySelector('#todos').appendChild(generateTodo(todo));
   });
 };
+
+
+// // Change completed status with checkboxes.
+// const setCompleted = function (id) {
+//   const todoIndex = todos.findIndex(todo => {
+//     return todo.id === id;
+//   });
+
+//   if (todoIndex > -1) {
+//     todos[todoIndex].completed = !todos[todoIndex].completed;
+//   };
+// };
+
+// *: I did this way for practicing with array methods.

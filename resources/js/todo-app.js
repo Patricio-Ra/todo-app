@@ -1,6 +1,5 @@
 'use strict'
 
-
 const todos = getSavedTodos();
 
 const filters = {
@@ -36,38 +35,3 @@ document.querySelector('#new-todo-form').addEventListener('submit', e => {
   };
   renderTodos(todos, filters);
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// let incompletedTodosNum = 0;
-// const incompletedTodos = todos.forEach(todo => {
-//   !todo.completed ? incompletedTodosNum += 1 : incompletedTodosNum += 0;
-// });
-
-// const todos2 = document.querySelectorAll('p');
-
-// const filterPs = function (ps, query) {
-//   ps.forEach(p => {
-//     if (p.textContent.toLowerCase().includes(query)) {
-//       p.remove();
-//     };
-//   });
-// };
-
-// filterPs(todos2, 'the');
-
-// // Add Todo input.
-// document.querySelector('#new-todo').addEventListener('input', (e) => console.log(e.target.value));
-// document.querySelector('#add-todo').addEventListener('click', (e) => console.log('TODO added!'));
