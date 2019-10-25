@@ -3,7 +3,7 @@
 // Fetch existing data from localStorage
 const getSavedTodos = () => {
   const todosJSON = localStorage.getItem('todos');
-  return todosJSON !== null ? JSON.parse(todosJSON) : [];
+  return todosJSON ? JSON.parse(todosJSON) : [];
 };
 
 
@@ -27,7 +27,7 @@ const removeTodo = id => {
 const setCompleted = id => {
   const todo = todos.find(todo => todo.id === id);
 
-  if (todo !== undefined) {
+  if (todo) {
     todo.completed = !todo.completed;
   };
 };

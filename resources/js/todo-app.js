@@ -21,7 +21,7 @@ document.querySelector('#hide-completed').addEventListener('change', e => {
 
 document.querySelector('#new-todo-form').addEventListener('submit', e => {
   e.preventDefault();
-  if (e.target.elements.newTodoInput.value.length > 0) {
+  if (e.target.elements.newTodoInput.value.length) {
     const newTodo = {
       id: uuidv4(),
       text: e.target.elements.newTodoInput.value,
