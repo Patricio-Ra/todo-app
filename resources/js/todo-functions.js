@@ -1,7 +1,7 @@
 'use strict'
 
 // Fetch existing data from localStorage
-const getSavedTodos = function () {
+const getSavedTodos = () => {
   const todosJSON = localStorage.getItem('todos');
 
   if (todosJSON !== null) {
@@ -13,16 +13,14 @@ const getSavedTodos = function () {
 
 
 // Save data to localStorage
-const saveTodos = function (todos) {
+const saveTodos = todos => {
   localStorage.setItem('todos', JSON.stringify(todos));
 };
 
 
 // Remove todo
-const removeTodo = function (id) {
-  const todoIndex = todos.findIndex(todo => {
-    return todo.id === id;
-  });
+const removeTodo = id => {
+  const todoIndex = todos.findIndex(todo => todo.id === id);
 
   if (todoIndex > -1) {
     todos.splice(todoIndex, 1);
@@ -31,10 +29,8 @@ const removeTodo = function (id) {
 
 
 // Toggle completed status with checkboxes.
-const setCompleted = function (id) {
-  const todo = todos.find(todo => {
-    return todo.id === id;
-  });
+const setCompleted = id => {
+  const todo = todos.find(todo => todo.id === id);
 
   if (todo !== undefined) {
     todo.completed = !todo.completed;
@@ -43,7 +39,7 @@ const setCompleted = function (id) {
 
 
 // Generate DOM elements for an individual note.
-const generateTodo = function (todo) {
+const generateTodo = todo => {
   const todoElement = document.createElement('div');
   const todoCheck = document.createElement('input');
   const todoText = document.createElement('span');
@@ -79,7 +75,7 @@ const generateTodo = function (todo) {
 
 
 // Generate DOM elements for the summary.
-const generateSummary = function (incompletedTodos) {
+const generateSummary = incompletedTodos => {
 
   const summary = document.createElement('h2');
   summary.textContent = `You have ${incompletedTodos.length} todos left.`;
@@ -89,7 +85,7 @@ const generateSummary = function (incompletedTodos) {
 
 
 // Render app based on filters.
-const renderTodos = function (todos, filters) {
+const renderTodos = (todos, filters) => {
   const filteredTodos = todos.filter(todo => {
     const textFiltering = todo.text.toLowerCase().includes(filters.searchText.toLowerCase());
     const completedFiltering = !filters.hideCompleted || !todo.completed;
@@ -97,9 +93,7 @@ const renderTodos = function (todos, filters) {
     return textFiltering && completedFiltering;
     });
 
-    const incompletedTodos = filteredTodos.filter(todo => {
-      return !todo.completed;
-    });
+    const incompletedTodos = filteredTodos.filter(todo => !todo.completed);
 
   document.querySelector('#todos').innerHTML = '';
   document.querySelector('#todos').appendChild(generateSummary(incompletedTodos));
@@ -108,16 +102,3 @@ const renderTodos = function (todos, filters) {
   });
 };
 
-
-// // Change completed status with checkboxes.
-// const setCompleted = function (id) {
-//   const todoIndex = todos.findIndex(todo => {
-//     return todo.id === id;
-//   });
-
-//   if (todoIndex > -1) {
-//     todos[todoIndex].completed = !todos[todoIndex].completed;
-//   };
-// };
-
-// *: I did this way for practicing with array methods.
