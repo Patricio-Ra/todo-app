@@ -1,2 +1,2 @@
 # todo-app
-Practice Todo app: JS.
+Learning vanilla JS.
