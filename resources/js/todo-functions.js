@@ -92,7 +92,7 @@ const renderTodos = (todos, filters) => {
     return textFiltering && completedFiltering;
     });
 
-    const incompletedTodos = filteredTodos.filter(todo => !todo.completed);
+  const incompletedTodos = filteredTodos.filter(todo => !todo.completed);
 
   document.querySelector('#todos').innerHTML = '';
   document.querySelector('#todos').appendChild(generateSummary(incompletedTodos));
