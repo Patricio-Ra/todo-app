@@ -4,21 +4,34 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Todo app</title>
+    <link rel="stylesheet" href="/resources/css/styles.css">
+    <link rel="shortcut icon" href="/resources/img/favicon.png" type="image/x-icon">
+    <title>To-do app</title>
 </head>
 <body>
-    <h1>Things Todo!</h1>
-    <label>
-        Search: <input id="filter-todos" type="text" placeholder="Filter todos">
-    </label>
-    <label>
-        <input type="checkbox" id="hide-completed">Hide completed
-    </label>
-    <div id="todos"></div>
-    <form id="new-todo-form">
-        <input type="text" name="newTodoInput" placeholder="Add a new todo">
-        <button>To Do!</button>
-    </form>
+    <header>
+        <div class="container">
+            <h1 class="header__title">To-do App</h1>
+            <h2 class="header__subtitle">Note it and just do it!</h2>
+        </div>
+    </header>
+    <main>
+        <div class="actions">
+            <div class="actions__container">
+                <input id="filter-todos" class="input" type="text" placeholder="Filter todos">
+                <label class="checkbox">
+                    <input type="checkbox" id="hide-completed">Hide completed
+                </label>
+            </div>
+        </div>
+        <div class="container">
+            <div id="todos"></div>
+            <form id="new-todo-form">
+                <input type="text" class="input" name="newTodoInput" placeholder="Add a new todo">
+                <button class="button">To Do!</button>
+            </form>
+        </div>
+    </main>
 
     <script src="vendor/js/uuidv4.js"></script>
     <script src="resources/js/todo-functions.js"></script>

@@ -39,27 +39,34 @@ const setCompleted = id => {
 
 // Generate DOM elements for an individual note.
 const generateTodo = todo => {
-	const todoElement = document.createElement('div');
+	const todoElement = document.createElement('label');
+	const containerEl = document.createElement('div');
 	const todoCheck = document.createElement('input');
 	const todoText = document.createElement('span');
 	const deleteBtn = document.createElement('button');
 
-  // Setup todo checkbox.
+  	// Setup todo checkbox.
 	todoCheck.setAttribute('type', 'checkbox');
 	todoCheck.checked = todo.completed;
-	todoElement.appendChild(todoCheck);
+	containerEl.appendChild(todoCheck);
 	todoCheck.addEventListener('change', e => {
 		setCompleted(todo.id);  // Instead it's better to todo.completed = e.target.checked;*
 		saveTodos(todos);
 		renderTodos(todos, filters);
 	});
 
-  // Setup todo text.
+  	// Setup todo text.
 	todoText.textContent = todo.text;
-	todoElement.appendChild(todoText);
+	containerEl.appendChild(todoText);
 
-  // Setup delete button.
-	deleteBtn.textContent = 'x';
+	// Setup container
+	todoElement.classList.add('list-item');
+	containerEl.classList.add('list-item__container');
+	todoElement.appendChild(containerEl);
+
+  	// Setup delete button.
+	deleteBtn.textContent = 'remove';
+	deleteBtn.classList.add('button', 'button--text');
 	todoElement.appendChild(deleteBtn);
 	deleteBtn.addEventListener('click', e => {
 		removeTodo(todo.id);
@@ -73,9 +80,10 @@ const generateTodo = todo => {
 
 // Generate DOM elements for the summary.
 const generateSummary = incompletedTodos => {
-
 	const summary = document.createElement('h2');
-	summary.textContent = `You have ${incompletedTodos.length} todos left.`;
+	const plural = incompletedTodos.length === 1 ? '' : 's';
+	summary.classList.add('list-title');
+	summary.textContent = `You have ${incompletedTodos.length} todo${plural} left.`;
 
 	return summary;
 };
@@ -83,6 +91,7 @@ const generateSummary = incompletedTodos => {
 
 // Render app based on filters.
 const renderTodos = (todos, filters) => {
+	const todosEl = document.getElementById('todos');
 	const filteredTodos = todos.filter(todo => {
 		const textFiltering = todo.text.toLowerCase().includes(filters.searchText.toLowerCase());
 		const completedFiltering = !filters.hideCompleted || !todo.completed;
@@ -91,10 +100,19 @@ const renderTodos = (todos, filters) => {
 
 	const incompletedTodos = filteredTodos.filter(todo => !todo.completed);
 
-	document.querySelector('#todos').innerHTML = '';
-	document.querySelector('#todos').appendChild(generateSummary(incompletedTodos));
-	filteredTodos.forEach(todo => {
-		document.querySelector('#todos').appendChild(generateTodo(todo));
-	});
+	todosEl.innerHTML = '';
+	todosEl.appendChild(generateSummary(incompletedTodos));
+
+	if (filteredTodos.length > 0) {
+		filteredTodos.forEach(todo => {
+			todosEl.appendChild(generateTodo(todo));
+		});
+	} else {
+		const emptyEl = document.createElement('p');
+		emptyEl.classList.add('empty-message');
+		emptyEl.textContent = 'No to-dos to show';
+		todosEl.appendChild(emptyEl);
+	};
+
 };
 

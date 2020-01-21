@@ -21,18 +21,17 @@ document.querySelector('#hide-completed').addEventListener('change', e => {
 
 document.querySelector('#new-todo-form').addEventListener('submit', e => {
 	e.preventDefault();
-	if (e.target.elements.newTodoInput.value.length) {
+	const text = e.target.elements.newTodoInput.value.trim();
+
+	if (text !== '') {
 		const newTodo = {
 			id: uuidv4(),
-			text: e.target.elements.newTodoInput.value,
+			text,
 			completed: false
 		};
 		todos.push(newTodo);
-		e.target.elements.newTodoInput.value = '';
-		saveTodos(todos)
-	} else {
-		return false;
+		saveTodos(todos);
+		renderTodos(todos, filters);
 	};
-
-	renderTodos(todos, filters);
+	e.target.elements.newTodoInput.value = '';
 });
